@@ -1,5 +1,6 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
+import crypto from "crypto";
 import pg from "pg";
 
 import companies_json from "./Companies.json" assert { type: "json" };
@@ -360,8 +361,10 @@ async function init() {
   console.log(Object.keys(companies_json));
 
   companies = companies.map((company) => {
+    let uuid = crypto.randomUUID();
+
     return {
-      id: uuidv4(),
+      id: uuid,
       name: company.name,
       specialization: company.specialization,
       origin: company.origin,
