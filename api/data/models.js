@@ -1,6 +1,7 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
+import pg from "pg";
 
 // Initialize a connection instance
 // const sequelize = new Sequelize({
@@ -9,10 +10,23 @@ import { v4 as uuidv4 } from "uuid";
 //   // logging: false,
 // });
 
-const sequelize = new Sequelize(
-  "postgres://default:O2zscVR6IhSP@ep-lucky-term-55691145.us-west-2.postgres.vercel-storage.com:5432/verceldb?sslmode=require"
-);
+// const sequelize = new Sequelize(
+//   "postgres://default:O2zscVR6IhSP@ep-lucky-term-55691145.us-west-2.postgres.vercel-storage.com:5432/verceldb?sslmode=require"
+// );
 
+const sequelize = new Sequelize(
+  "postgres://default:O2zscVR6IhSP@ep-lucky-term-55691145.us-west-2.postgres.vercel-storage.com:5432/verceldb?sslmode=require",
+  {
+    dialectModule: pg,
+    pool: {
+      max: 2,
+      min: 0,
+      acquire: 30000,
+      idle: 0,
+    },
+    ssl: true,
+  }
+);
 // Define the Company model
 class Company extends Model {}
 
