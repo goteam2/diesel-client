@@ -24,8 +24,6 @@
     "sequelize": "^6.32.1",
     "sqlite3": "^5.1.6",
     "uuid": "^9.0.0",
-    "vite-plugin-ssr": "^0.4.133",
-    "vite-plugin-vercel": "^0.2.1",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"
   },
