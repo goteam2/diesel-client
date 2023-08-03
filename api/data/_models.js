@@ -4,6 +4,9 @@ import path from "path";
 import { v4 as uuidv4 } from "uuid";
 import pg from "pg";
 
+import companies_json from "./Companies.json" assert { type: "json" };
+import mechs_json from "./Mechs.json" assert { type: "json" };
+
 // Initialize a connection instance
 // const sequelize = new Sequelize({
 //   dialect: "sqlite",
@@ -352,12 +355,11 @@ Player.init(
 async function init() {
   // Create the tables in the database
 
-  let companies = JSON.parse(
-    fs.readFileSync(path.join(process.cwd(), "data", "Companies.json"))
-  );
-  let mechs = JSON.parse(
-    fs.readFileSync(path.join(process.cwd(), "data", "Mechs.json"))
-  );
+  let companies = companies_json;
+  let mechs = mechs_json;
+
+  console.log(Object.keys(companies));
+  console.log(Object.keys(companies_json));
 
   companies = companies.map((company) => {
     return {
