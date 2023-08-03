@@ -3,8 +3,8 @@ import { Sequelize, DataTypes, Model } from "sequelize";
 import crypto from "crypto";
 // import pg from "pg";
 
-import companies_json from "./Companies.json" assert { type: "json" };
-import mechs_json from "./Mechs.json" assert { type: "json" };
+import companies_json from "./_Companies.js";
+import mechs_json from "./_Mechs.js";
 
 // Initialize a connection instance
 // const sequelize = new Sequelize({
