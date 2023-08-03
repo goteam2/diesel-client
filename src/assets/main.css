@@ -1,0 +1,15 @@
+@import url("https://p.typekit.net/p.css?s=1&k=aez1oze&ht=tk&f=10793.10799&a=87447420&app=typekit&e=css");
+
+@import "./base.css";
+
+html,
+body {
+  background: #4b4b4b;
+}
+#app {
+  max-width: min(768px, 100vw);
+  height: 1024px;
+  max-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+}
