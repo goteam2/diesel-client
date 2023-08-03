@@ -1,16 +1,15 @@
 import express from "express";
-import { Player, Inventory, Weapon, Armor } from "../data/_models.js";
+import prisma from "../utils/_prisma.js";
 import ensureAuthenticated from "../utils/_ensureAuthenticated.js";
-import Sequelize from "sequelize";
 
 const router = express.Router();
-const Op = Sequelize.Op;
 
 // Get the current shop
 router.get("/", ensureAuthenticated, async (req, res) => {
   // Combine weapon and armor tables
-  const weapons = await Weapon.findAll();
-  const armors = await Armor.findAll();
+
+  const armors = await prisma.armor.findMany();
+  const weapons = await prisma.weapon.findMany();
   const items = [...weapons, ...armors];
 
   // Randomly select 5 items
@@ -28,22 +27,28 @@ router.get("/", ensureAuthenticated, async (req, res) => {
 router.post("/buy", ensureAuthenticated, async (req, res) => {
   const { itemId, itemType } = req.body; // itemType is 'Weapon' or 'Armor'
 
-  const item = await (itemType === "Weapon" ? Weapon : Armor).findOne({
+  const item = await prisma[itemType.toLowerCase()].findUnique({
     where: { id: itemId },
   });
 
-  const player = await Player.findOne({ where: { id: req.user.id } });
+  const player = await prisma.player.findUnique({ where: { id: req.user.id } });
 
   if (player.gold < item.purchasePrice) {
     return res.status(400).json({ error: "Not enough gold" });
   }
 
   player.gold -= item.purchasePrice;
-  await player.save();
+  await prisma.player.update({ where: { id: req.user.id }, data: player });
 
-  await Inventory.create({
-    playerId: req.user.id,
-    [`${itemType.toLowerCase()}Id`]: itemId,
+  // await Inventory.create({
+  //   playerId: req.user.id,
+  //   [`${itemType.toLowerCase()}Id`]: itemId,
+  // });
+  await prisma.inventory.create({
+    data: {
+      playerId: req.user.id,
+      [`${itemType.toLowerCase()}Id`]: itemId,
+    },
   });
 
   res.json({ message: "Item purchased successfully" });
@@ -53,16 +58,17 @@ router.post("/buy", ensureAuthenticated, async (req, res) => {
 router.post("/sell", ensureAuthenticated, async (req, res) => {
   const { itemId, itemType } = req.body; // itemType is 'Weapon' or 'Armor'
 
-  const item = await (itemType === "Weapon" ? Weapon : Armor).findOne({
+  const item = await prisma[itemType.toLowerCase()].findUnique({
     where: { id: itemId },
   });
 
-  const player = await Player.findOne({ where: { id: req.user.id } });
+  const player = await prisma.player.findUnique({ where: { id: req.user.id } });
 
   player.gold += item.purchasePrice;
-  await player.save();
+  // await player.save();
+  await prisma.player.update({ where: { id: req.user.id }, data: player });
 
-  await Inventory.destroy({
+  await prisma.inventory.delete({
     where: { playerId: req.user.id, [`${itemType.toLowerCase()}Id`]: itemId },
   });
 

@@ -3,7 +3,7 @@
     <Header />
     <Currency v-show="player.id > 0" />
     <main class="flex flex-col | justify-center items-center | h-full | p-4">
-      <transition name="fade">
+      <transition appear>
         <router-view />
       </transition>
     </main>
@@ -24,10 +24,6 @@ import Currency from "@/components/layout/Currency.vue";
 const playerStore = storeToRefs(usePlayerStore());
 
 const player = ref(playerStore);
-watch(playerStore, (newVal, oldVal) => {
-  console.log("player changed", newVal, oldVal);
-  player.value = newVal;
-});
 </script>
 
 <style lang="scss" scoped>

@@ -1,7 +1,8 @@
 import express from "express";
 import bcrypt from "bcrypt";
-import { Player } from "../data/_models.js";
 import jwt from "jsonwebtoken";
+
+import prisma from "../utils/_prisma.js";
 import ensureAuthenticated from "../utils/_ensureAuthenticated.js";
 
 import dotenv from "dotenv";
@@ -13,23 +14,31 @@ const router = express.Router();
 router.post("/register", async (req, res) => {
   const { name, password } = req.body;
 
-  const existingPlayer = await Player.findOne({ where: { name } });
+  // const existingPlayer = await Player.findOne({ where: { name } });
+
+  const existingPlayer = await prisma.player.findUnique({
+    where: { name: name },
+  });
+
   if (existingPlayer) {
     return res.status(400).json({ error: "Player already exists" });
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const newPlayer = await Player.create({
-    name: name,
-    password: hashedPassword,
+  const newPlayer = await prisma.player.create({
+    data: { name: name, password: hashedPassword },
   });
   const token = jwt.sign({ id: newPlayer.id }, process.env.JWT_SECRET, {
     expiresIn: "1h", // Token expires in 1 hour
   });
   //update token
   newPlayer.token = token;
-  await newPlayer.save();
+
+  await prisma.player.update({
+    where: { id: newPlayer.id },
+    data: { token: token },
+  });
 
   res.status(201).json({
     message: "Player created successfully",
@@ -47,7 +56,7 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { name, password } = req.body;
 
-  const player = await Player.findOne({ where: { name } });
+  const player = await prisma.player.findUnique({ where: { name: name } });
   if (!player) {
     return res.status(401).json({ error: "Invalid username or password" });
   }
@@ -60,13 +69,17 @@ router.post("/login", async (req, res) => {
   //update date_last_played
   player.date_last_played = Date.now();
 
-  await player.save();
+  // await player.save();
 
   const token = jwt.sign({ id: player.id }, process.env.JWT_SECRET, {
     expiresIn: "1h", // Token expires in 1 hour
   });
   player.token = token;
-  await player.save();
+
+  await prisma.player.update({
+    where: { id: player.id },
+    data: { token: token },
+  });
 
   res.json({
     message: "Logged in successfully",
@@ -92,7 +105,7 @@ router.put("/update", ensureAuthenticated, async (req, res) => {
     return res.status(400).json({ error: "Nothing to update" });
   }
 
-  const player = await Player.findByPk(req.userId);
+  const player = await prisma.player.findUnique({ where: { id: req.userId } });
   if (!player) {
     return res.status(404).json({ error: "Player not found" });
   }
@@ -106,7 +119,10 @@ router.put("/update", ensureAuthenticated, async (req, res) => {
     player.password = hashedPassword;
   }
 
-  await player.save();
+  await prisma.player.update({
+    where: { id: player.id },
+    data: { name: player.name, password: player.password },
+  });
 
   res.json({ message: "Player updated successfully" });
 });

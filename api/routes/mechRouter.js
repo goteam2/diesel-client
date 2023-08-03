@@ -1,12 +1,14 @@
 import express from "express";
-import { Mech } from "../data/_models.js";
+import prisma from "../utils/_prisma.js";
 import ensureAuthenticated from "../utils/_ensureAuthenticated.js";
 
 const router = express.Router();
 
 // Get the current squadron
 router.get("/all", ensureAuthenticated, async (req, res) => {
-  const squadron = await Mech.findAll({ where: { playerId: req.user.id } });
+  const squadron = await prisma.mech.findMany({
+    where: { playerId: req.user.id },
+  });
 
   res.json(squadron);
 });
@@ -15,7 +17,7 @@ router.get("/all", ensureAuthenticated, async (req, res) => {
 router.post("/add", ensureAuthenticated, async (req, res) => {
   const { mech } = req.body;
 
-  await Mech.create(mech);
+  await prisma.mech.create({ data: mech });
 
   res.json({ message: "Mech added to squadron" });
 });

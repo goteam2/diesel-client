@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
+}
+model Armor {
+  id          Int    @id @default(autoincrement())
+  name        String    @db.VarChar(255)
+  defense     Int?
+  accuracy    Float?
+  evasion     Float?
+  criticalHit Int?
+  price       Int
+  companyId   String    @db.Uuid
+  createdAt   DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt   DateTime  @updatedAt @db.Timestamptz(6)
+  Company   Company @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Company {
+  id             String    @id @db.Uuid
+  name           String    @db.VarChar(255)
+  specialization String    @db.VarChar(255)
+  origin         String    @db.VarChar(255)
+  ideology       String    @db.VarChar(255)
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @db.Timestamptz(6)
+  Armor         Armor[]
+  Weapon        Weapon[]
+}
+
+model Hangar {
+  id        Int      @id @default(autoincrement())
+  playerId  Int
+  mechId    Int
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @db.Timestamptz(6)
+}
+
+model Inventory {
+  id        Int      @id @default(autoincrement())
+  playerId  Int
+  weaponId  Int?
+  armorId   Int?
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @db.Timestamptz(6)
+}
+
+model Mech {
+  id          Int      @id @default(autoincrement())
+  class       String   @db.VarChar(255)
+  name        String   @db.VarChar(255)
+  attack      Int
+  defense     Int
+  accuracy    Int
+  speed       Int
+  evasion     Float
+  weight      Int
+  health      Int
+  criticalHit Float
+  price       Int
+  slots       Int
+  equipment   Json     @db.Json
+  createdAt   DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt   DateTime @updatedAt @db.Timestamptz(6)
+}
+
+model Player {
+  id               Int      @id @default(autoincrement())
+  name             String   @unique @db.VarChar(255)
+  password         String   @db.VarChar(255)
+  cash             Int      @default(1000)
+  diamonds         Int      @default(100)
+  date_created     DateTime @default(now())
+  date_last_played DateTime @default(now()) @db.Timestamptz(6)
+  token            String?  @db.VarChar(255)
+  createdAt        DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt        DateTime @updatedAt @db.Timestamptz(6)
+}
+
+model Squadron {
+  squadId   Int      @id @default(autoincrement())
+  playerId  Int
+  mechs     Json     @db.Json
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @db.Timestamptz(6)
+}
+
+model Weapon {
+  id          Int       @id @default(autoincrement())
+  name        String    @db.VarChar(255)
+  attack      Int?
+  criticalHit Int?
+  accuracy    Float?
+  price       Int
+  companyId   String    @db.Uuid
+  createdAt   DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt   DateTime  @updatedAt @db.Timestamptz(6)
+  Company   Company @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}

@@ -1,24 +1,17 @@
 import express from "express";
 import ensureAuthenticated from "../utils/_ensureAuthenticated.js";
+import prisma from "../utils/_prisma.js";
 
 const router = express.Router();
 // import * as model from "../data/models.js";
 // console.log(model);
-import {
-  Weapon,
-  Armor,
-  Inventory,
-  Mech,
-  Hangar,
-  Squadron,
-  Player,
-} from "../data/_models.js";
 
 // Equip items on mech
 router.post("/inventory/equip", ensureAuthenticated, async (req, res) => {
   const { mechId, slot, itemId, type } = req.body; // type is 'Weapon' or 'Armor'
 
-  const mech = await Mech.findOne({ where: { id: mechId } });
+  // const mech = await Mech.findOne({ where: { id: mechId } });
+  const mech = await prisma.mech.findUnique({ where: { id: mechId } });
 
   // If the slot is already occupied
   if (mech["slot" + slot]) {
@@ -28,15 +21,18 @@ router.post("/inventory/equip", ensureAuthenticated, async (req, res) => {
     };
     inventoryItem[`${type.toLowerCase()}Id`] = mech["slot" + slot];
 
-    await Inventory.create(inventoryItem);
+    // await Inventory.create(inventoryItem);
+    await prisma.inventory.create({ data: inventoryItem });
   }
 
   // Equip the new item
   mech["slot" + slot] = itemId;
-  await mech.save();
+
+  await prisma.mech.update({ where: { id: mechId }, data: mech });
 
   // Remove the new item from inventory
-  await Inventory.destroy({
+
+  await prisma.inventory.delete({
     where: { playerId: req.user.id, [`${type.toLowerCase()}Id`]: itemId },
   });
 
@@ -50,8 +46,8 @@ router.post("/hangar/move-mech", ensureAuthenticated, async (req, res) => {
   const fromModel = location === "Hangar" ? Squadron : Hangar;
   const toModel = location === "Hangar" ? Hangar : Squadron;
 
-  await fromModel.destroy({ where: { playerId: req.user.id, mechId } });
-  await toModel.create({ playerId: req.user.id, mechId });
+  await prisma[fromModel].delete({ where: { playerId: req.user.id, mechId } });
+  await prisma[toModel].create({ data: { playerId: req.user.id, mechId } });
 
   res.json({ message: `Mech moved to ${location}` });
 });
