@@ -353,10 +353,10 @@ async function init() {
   // Create the tables in the database
 
   let companies = JSON.parse(
-    fs.readFileSync(path.join(process.cwd(), "files", "/data/Companies.json"))
+    fs.readFileSync(path.join(process.cwd(), "data", "Companies.json"))
   );
   let mechs = JSON.parse(
-    fs.readFileSync(path.join(process.cwd(), "files", "/data/Mechs.json"))
+    fs.readFileSync(path.join(process.cwd(), "data", "Mechs.json"))
   );
 
   companies = companies.map((company) => {
