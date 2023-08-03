@@ -21,7 +21,9 @@ app.use("/squadron", squadronRouter);
 app.use("/shop", shopRouter);
 app.use("/mechs", MechRouter);
 app.use("/player", playerRouter);
-
+app.get("/test", (req, res) => {
+  res.send("Hello World!");
+});
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
