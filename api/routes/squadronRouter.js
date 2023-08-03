@@ -73,11 +73,8 @@ router.get("/createRandomTeam/:playerId", async (req, res) => {
 
 // testing - get all mechs for player
 router.get("/alltesting/:playerId", async (req, res) => {
-  // const squadron = await Squadron.findAll({
-  //   where: { playerId: req.params.playerId },
-  // });
   const squadron = await prisma.squadron.findMany({
-    where: { playerId: req.params.playerId },
+    where: { playerId: parseInt(req.params.playerId) },
   });
 
   res.json(squadron);
