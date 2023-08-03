@@ -1,7 +1,7 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
 // import { v4 as uuidv4 } from "uuid";
 import crypto from "crypto";
-import pg from "pg";
+// import pg from "pg";
 
 import companies_json from "./Companies.json" assert { type: "json" };
 import mechs_json from "./Mechs.json" assert { type: "json" };
@@ -20,7 +20,7 @@ import mechs_json from "./Mechs.json" assert { type: "json" };
 const sequelize = new Sequelize(
   "postgres://default:O2zscVR6IhSP@ep-lucky-term-55691145.us-west-2.postgres.vercel-storage.com:5432/verceldb?sslmode=require",
   {
-    dialectModule: pg,
+    // dialectModule: pg,
     pool: {
       max: 2,
       min: 0,
