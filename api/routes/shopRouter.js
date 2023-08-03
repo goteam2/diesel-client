@@ -1,6 +1,6 @@
 import express from "express";
-import { Player, Inventory, Weapon, Armor } from "../data/models.js";
-import ensureAuthenticated from "../utils/ensureAuthenticated.js";
+import { Player, Inventory, Weapon, Armor } from "../data/_models.js";
+import ensureAuthenticated from "../utils/_ensureAuthenticated.js";
 import Sequelize from "sequelize";
 
 const router = express.Router();

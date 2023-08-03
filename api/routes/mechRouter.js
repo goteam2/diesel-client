@@ -1,6 +1,6 @@
 import express from "express";
-import { Mech } from "../data/models.js";
-import ensureAuthenticated from "../utils/ensureAuthenticated.js";
+import { Mech } from "../data/_models.js";
+import ensureAuthenticated from "../utils/_ensureAuthenticated.js";
 
 const router = express.Router();
 

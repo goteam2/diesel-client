@@ -1,6 +1,6 @@
 import express from "express";
-import { Player, Mech, Squadron, Hangar } from "../data/models.js";
-import ensureAuthenticated from "../utils/ensureAuthenticated.js";
+import { Player, Mech, Squadron, Hangar } from "../data/_models.js";
+import ensureAuthenticated from "../utils/_ensureAuthenticated.js";
 
 const router = express.Router();
 

@@ -1,7 +1,7 @@
 import express from "express";
 import { Sequelize } from "sequelize";
-import { Player, Mech, Squadron } from "../data/models.js";
-import ensureAuthenticated from "../utils/ensureAuthenticated.js";
+import { Player, Mech, Squadron } from "../data/_models.js";
+import ensureAuthenticated from "../utils/_ensureAuthenticated.js";
 const router = express.Router();
 
 // Get the current squadron

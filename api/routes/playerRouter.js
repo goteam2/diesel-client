@@ -1,8 +1,8 @@
 import express from "express";
 import bcrypt from "bcrypt";
-import { Player } from "../data/models.js";
+import { Player } from "../data/_models.js";
 import jwt from "jsonwebtoken";
-import ensureAuthenticated from "../utils/ensureAuthenticated.js";
+import ensureAuthenticated from "../utils/_ensureAuthenticated.js";
 
 import dotenv from "dotenv";
 dotenv.config();

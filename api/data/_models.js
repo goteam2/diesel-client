@@ -351,8 +351,8 @@ Player.init(
 async function init() {
   // Create the tables in the database
 
-  let companies = JSON.parse(fs.readFileSync("./data/Companies.json"));
-  let mechs = JSON.parse(fs.readFileSync("./data/Mechs.json"));
+  let companies = JSON.parse(fs.readFileSync("./api/data/Companies.json"));
+  let mechs = JSON.parse(fs.readFileSync("./api/data/Mechs.json"));
 
   companies = companies.map((company) => {
     return {

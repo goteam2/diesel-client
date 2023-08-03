@@ -1,5 +1,5 @@
 import express from "express";
-import ensureAuthenticated from "../utils/ensureAuthenticated.js";
+import ensureAuthenticated from "../utils/_ensureAuthenticated.js";
 
 const router = express.Router();
 // import * as model from "../data/models.js";
@@ -12,7 +12,7 @@ import {
   Hangar,
   Squadron,
   Player,
-} from "../data/models.js";
+} from "../data/_models.js";
 
 // Equip items on mech
 router.post("/inventory/equip", ensureAuthenticated, async (req, res) => {
