@@ -1,5 +1,6 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
 import fs from "fs";
+import path from "path";
 import { v4 as uuidv4 } from "uuid";
 import pg from "pg";
 
@@ -351,8 +352,12 @@ Player.init(
 async function init() {
   // Create the tables in the database
 
-  let companies = JSON.parse(fs.readFileSync("./api/data/Companies.json"));
-  let mechs = JSON.parse(fs.readFileSync("./api/data/Mechs.json"));
+  let companies = JSON.parse(
+    fs.readFileSync(path.join(process.cwd(), "files", "/data/Companies.json"))
+  );
+  let mechs = JSON.parse(
+    fs.readFileSync(path.join(process.cwd(), "files", "/data/Mechs.json"))
+  );
 
   companies = companies.map((company) => {
     return {
