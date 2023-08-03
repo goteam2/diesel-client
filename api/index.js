@@ -9,20 +9,16 @@ import playerRouter from "./routes/playerRouter.js";
 import MechRouter from "./routes/mechRouter.js";
 
 const app = express();
-const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 
 // Use the imported routes
-app.use("/inventory", inventoryRouter);
-app.use("/hangar", hangarRouter);
-app.use("/squadron", squadronRouter);
-app.use("/shop", shopRouter);
-app.use("/mechs", MechRouter);
-app.use("/player", playerRouter);
-app.get("/test", (req, res) => {
-  res.send("Hello World!");
-});
+app.use("/api/inventory", inventoryRouter);
+app.use("/api/hangar", hangarRouter);
+app.use("/api/squadron", squadronRouter);
+app.use("/api/shop", shopRouter);
+app.use("/api/mechs", MechRouter);
+app.use("/api/player", playerRouter);
 
 export default app;
