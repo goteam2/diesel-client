@@ -14,6 +14,7 @@ router.post("/all", ensureAuthenticated, async (req, res) => {
     const player = await prisma.player.findUnique({
       where: { id: parseInt(req.body.playerId) },
     });
+    console.log("found player", player.id);
     if (!player) {
       return res.status(404).json({ error: "Player not found" });
     }
@@ -21,6 +22,7 @@ router.post("/all", ensureAuthenticated, async (req, res) => {
     const squadrons = await prisma.squadron.findMany({
       where: { playerId: player.id },
     });
+    console.log("found squadrons", squadrons.length);
 
     if (squadrons.length === 0) {
       return res.status(400).json({ error: "No squadrons found" });
@@ -28,19 +30,15 @@ router.post("/all", ensureAuthenticated, async (req, res) => {
 
     // get the mechs for the squadrons from the mechs table
     for (let squad of squadrons) {
+      const mechs = await prisma.mech.findMany({
+        where: { id: { in: squad.mechs } },
+      });
+      squad.mechs = mechs;
       for (let i = 0; i < squad.mechs.length; i++) {
-        const mech = await prisma.mech.findUnique({
-          where: { id: squad.mechs[i] },
+        const equipment = await prisma.equipment.findMany({
+          where: { id: { in: squad.mechs[i].equipment } },
         });
-        squad.mechs[i] = mech;
-      }
-      for (let i = 0; i < squad.mechs.length; i++) {
-        for (let j = 0; j < squad.mechs[i].equipment.length; j++) {
-          const weapon = await prisma.equipment.findUnique({
-            where: { id: squad.mechs[i].equipment[j] },
-          });
-          squad.mechs[i].equipment[j] = weapon;
-        }
+        squad.mechs[i].equipment = equipment;
       }
     }
 
