@@ -5,17 +5,52 @@ import ensureAuthenticated from "../utils/_ensureAuthenticated.js";
 const router = express.Router();
 
 // Get the current squadron
-router.get("/all", ensureAuthenticated, async (req, res) => {
+router.post("/all", ensureAuthenticated, async (req, res) => {
   const token = req.headers["x-access-token"];
+  if (!req.body.playerId)
+    return res.status(400).json({ error: "No player id provided" });
 
-  const player = await prisma.player.findUnique({ where: { id: req.user.id } });
-  console.log(player);
+  try {
+    const player = await prisma.player.findUnique({
+      where: { id: parseInt(req.body.playerId) },
+    });
+    if (!player) {
+      return res.status(404).json({ error: "Player not found" });
+    }
 
-  const squadron = await prisma.squadron.findMany({
-    where: { playerId: player.id },
-  });
+    const squadrons = await prisma.squadron.findMany({
+      where: { playerId: player.id },
+    });
 
-  res.json(squadron);
+    if (squadrons.length === 0) {
+      return res.status(400).json({ error: "No squadrons found" });
+    }
+
+    // get the mechs for the squadrons from the mechs table
+    for (let squad of squadrons) {
+      for (let i = 0; i < squad.mechs.length; i++) {
+        const mech = await prisma.mech.findUnique({
+          where: { id: squad.mechs[i] },
+        });
+        squad.mechs[i] = mech;
+      }
+      for (let i = 0; i < squad.mechs.length; i++) {
+        for (let j = 0; j < squad.mechs[i].equipment.length; j++) {
+          const weapon = await prisma.equipment.findUnique({
+            where: { id: squad.mechs[i].equipment[j] },
+          });
+          squad.mechs[i].equipment[j] = weapon;
+        }
+      }
+    }
+
+    //get the equipment for the mechs from equipment table
+
+    res.json(squadrons);
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ error: "Error getting squadron", details: e });
+  }
 });
 
 // Add a mech to the squadron

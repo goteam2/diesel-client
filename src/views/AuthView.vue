@@ -1,6 +1,6 @@
 <template>
   <div class="w-full max-w-xs gap-y-2">
-    <form @submit.prevent="submitForm" class="">
+    <form @submit.prevent="submitForm" class="grid grid-cols-1">
       <div class="mb-4">
         <label class="block text-sm font-bold mb-2" for="username">
           USERNAME
@@ -13,7 +13,7 @@
         </label>
         <input-field id="password" type="password" v-model="password" />
       </div>
-      <div class="w-100 flex flex-col">
+      <div class="w-full grid grid-cols-1 gap-y-4">
         <game-btn type="submit" color="white" :loading="loading">
           {{ pageTitle }}
         </game-btn>
@@ -21,7 +21,6 @@
         <game-btn link="/" color="white"> BACK </game-btn>
       </div>
     </form>
-    <ErrorMessage :error="playerStore.error" />
   </div>
 </template>
 
@@ -33,7 +32,6 @@ import { storeToRefs } from "pinia";
 
 import { usePlayerStore } from "@/stores/usePlayerStore";
 
-import ErrorMessage from "@/components/ErrorMessage.vue";
 import GameBtn from "@/components/ui/GameBtn.vue";
 import InputField from "@/components/ui/InputField.vue";
 
@@ -70,8 +68,10 @@ const login = async (event) => {
 
     if (response.data && response.data.player.token) {
       localStorage.setItem("token", response.data.player.token);
+      localStorage.setItem("tokenExpires", response.data.player.tokenExpires);
       playerStore.error.value = null;
       playerStore.token.value = response.data.player.token;
+      playerStore.tokenExpires.value = response.data.player.tokenExpires;
       playerStore.id.value = response.data.player.id;
       playerStore.name.value = response.data.player.name;
       playerStore.cash.value = response.data.player.cash;

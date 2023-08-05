@@ -37,13 +37,17 @@ async function init() {
       ideology: company.ideology,
     };
   });
-
   const weapons = companies
     .map((company) => {
       return company.weapons.map((weapon) => {
         return {
           name: weapon.name,
+          type: "weapon",
           attack: weapon.attack,
+          defense: weapon.defense,
+          criticalHit: weapon.criticalHit,
+          accuracy: weapon.accuracy,
+          evasion: weapon.evasion,
           criticalHit: weapon.criticalHit,
           accuracy: weapon.accuracy,
           price: weapon.price,
@@ -53,13 +57,17 @@ async function init() {
       });
     })
     .flat();
+
   const armor = companies
     .map((company) => {
       return company.armor.map((armor) => {
         return {
           name: armor.name,
+          type: "armor",
           attack: armor.attack,
           defense: armor.defense,
+          criticalHit: armor.criticalHit,
+          accuracy: armor.accuracy,
           evasion: armor.evasion,
           criticalHit: armor.criticalHit,
           accuracy: armor.accuracy,
@@ -71,18 +79,15 @@ async function init() {
     })
     .flat();
 
+  let equipment = weapons.concat(armor);
   try {
-    // await sequelize.sync({ force: true });
-
     await prisma.Company.createMany({ data: companies_reduced });
-    await prisma.Weapon.createMany({ data: weapons });
-    await prisma.Armor.createMany({ data: armor });
+    await prisma.Equipment.createMany({ data: equipment });
     await prisma.Mech.createMany({ data: mechs });
   } catch (error) {
     console.log(error);
   }
 }
-// sequelize.sync({ alter: true });
 init();
 
 // export { Company, Weapon, Armor, Inventory, Mech, Hangar, Squadron, Player };

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full max-w-xs gap-y-2">
+  <div class="w-full max-w-xs grid grid-cols-1 gap-y-4">
     <game-btn link="/squadron" color="white"> SQUADRON </game-btn>
     <game-btn link="/equipment" color="white"> EQUIPMENT</game-btn>
     <game-btn link="/comms" color="white">COMMS</game-btn>

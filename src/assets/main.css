@@ -2,14 +2,41 @@
 
 @import "./base.css";
 
-html,
 body {
   background: #4b4b4b;
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
+  overflow: hidden;
 }
 #app {
-  max-width: min(768px, 100vw);
+  max-width: min(480px, 100vw);
+  width: 100%;
   height: 1024px;
-  max-height: 100vh;
+  max-height: min(100vh, 844px);
+  margin: auto;
   display: grid;
   grid-template-columns: 1fr;
+}
+
+/* SCROLLBAR */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 0px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

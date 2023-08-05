@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full max-w-xs gap-y-2">
+  <div class="w-full max-w-xs grid grid-cols-1 gap-y-4">
     <game-btn link="/register" color="white"> REGISTER </game-btn>
     <game-btn link="/login" color="white"> LOG IN</game-btn>
   </div>

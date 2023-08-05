@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "prisma generate && vite build",
-    "serve": "nodemon api/index.js",
+    "serve": "nodemon api/_listen.js",
     "reset-db": "npx prisma db push --force-reset",
     "populate-db": "node api/data/_models.js",
     "preview": "vite preview"

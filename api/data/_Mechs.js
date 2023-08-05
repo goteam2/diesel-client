@@ -13,12 +13,7 @@ export default [
     criticalHit: 0.1,
     price: 100,
     slots: 4,
-    equipment: {
-      slot1: 101,
-      slot2: 106,
-      slot3: 105,
-      slot4: 110,
-    },
+    equipment: [101, 106, 105, 110],
   },
   {
     id: 0,
@@ -34,12 +29,7 @@ export default [
     criticalHit: 0.05,
     price: 2000,
     slots: 4,
-    equipment: {
-      slot1: 1,
-      slot2: 7,
-      slot3: 31,
-      slot4: 27,
-    },
+    equipment: [1, 7, 31, 27],
   },
   {
     id: 1,
@@ -55,12 +45,7 @@ export default [
     criticalHit: 0.1,
     price: 1800,
     slots: 4,
-    equipment: {
-      slot1: 61,
-      slot2: 19,
-      slot3: 13,
-      slot4: 68,
-    },
+    equipment: [61, 19, 13, 68],
   },
   {
     id: 2,
@@ -76,12 +61,7 @@ export default [
     health: 70,
     price: 100,
     slots: 4,
-    equipment: {
-      slot1: 104,
-      slot2: 108,
-      slot3: 109,
-      slot4: 103,
-    },
+    equipment: [104, 108, 109, 103],
   },
   {
     id: 4,
@@ -97,12 +77,7 @@ export default [
     health: 60,
     price: 100,
     slots: 4,
-    equipment: {
-      slot1: 105,
-      slot2: 105,
-      slot3: 101,
-      slot4: 101,
-    },
+    equipment: [105, 105, 101, 101],
   },
   {
     id: 5,
@@ -118,12 +93,7 @@ export default [
     health: 80,
     price: 100,
     slots: 4,
-    equipment: {
-      slot1: 106,
-      slot2: 107,
-      slot3: 108,
-      slot4: 103,
-    },
+    equipment: [106, 107, 108, 103],
   },
   {
     id: 6,
@@ -139,12 +109,7 @@ export default [
     health: 70,
     price: 100,
     slots: 4,
-    equipment: {
-      slot1: 104,
-      slot2: 103,
-      slot3: 102,
-      slot4: 107,
-    },
+    equipment: [104, 103, 102, 107],
   },
   {
     id: 7,
@@ -160,12 +125,7 @@ export default [
     health: 80,
     price: 100,
     slots: 4,
-    equipment: {
-      slot1: 109,
-      slot2: 105,
-      slot3: 103,
-      slot4: 108,
-    },
+    equipment: [109, 105, 103, 108],
   },
   {
     id: 8,
@@ -181,12 +141,7 @@ export default [
     health: 100,
     price: 100,
     slots: 4,
-    equipment: {
-      slot1: 102,
-      slot2: 105,
-      slot3: 107,
-      slot4: 109,
-    },
+    equipment: [102, 105, 107, 109],
   },
   {
     id: 9,
@@ -202,12 +157,7 @@ export default [
     health: 90,
     price: 100,
     slots: 4,
-    equipment: {
-      slot1: 108,
-      slot2: 101,
-      slot3: 107,
-      slot4: 110,
-    },
+    equipment: [108, 101, 107, 110],
   },
   {
     id: 10,
@@ -223,12 +173,7 @@ export default [
     health: 80,
     price: 100,
     slots: 4,
-    equipment: {
-      slot1: 101,
-      slot2: 106,
-      slot3: 105,
-      slot4: 110,
-    },
+    equipment: [101, 106, 105, 110],
   },
   {
     id: 11,
@@ -244,11 +189,6 @@ export default [
     health: 90,
     price: 100,
     slots: 4,
-    equipment: {
-      slot1: 101,
-      slot2: 102,
-      slot3: 105,
-      slot4: 106,
-    },
+    equipment: [101, 102, 105, 106],
   },
 ];

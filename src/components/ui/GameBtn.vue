@@ -60,7 +60,7 @@ const onClick = () => {
 
 const btnClass = computed(() => {
   return [
-    "block w-full mb-4 p-2",
+    "block w-full p-2",
     "bg-transparent hover:bg-white/20",
     "focus:outline-none focus:ring focus:ring-offset-2",
     "border-black border-4 focus:-ring-white rounded-0",

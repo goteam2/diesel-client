@@ -71,7 +71,7 @@ const pageIcon = ref("shop");
 watch(route, (newVal, oldVal) => {
   pageIcon.value = newVal.name;
   currentRoute.value = newVal.name;
-  console.log("route changed", newVal, oldVal, pageIcon.value);
+  // console.log("route changed", newVal, oldVal, pageIcon.value);
 });
 
 const navItems = [
