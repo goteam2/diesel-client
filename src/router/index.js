@@ -40,10 +40,10 @@ export const router = createRouter({
       // component: () => import('../views/AboutView.vue')
     },
     {
-      path: "/equipment",
+      path: "/equipment/:id",
       name: "equipment",
 
-      component: () => import("../views/HangarView.vue"),
+      component: () => import("../views/EquipView.vue"),
     },
     {
       path: "/shop",

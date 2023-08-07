@@ -16,6 +16,10 @@ export const useSquadronStore = defineStore(
     const getSelectedSquadron = computed(() => {
       return squadrons.value[selectedSquadron.value];
     });
+    const selectedMech = ref(0);
+    const getSelectedMech = computed(() => {
+      return squadrons.value[selectedSquadron.value].mechs[selectedMech.value];
+    });
     const loading = ref(false);
     const fetchSquadrons = async () => {
       try {
@@ -55,6 +59,8 @@ export const useSquadronStore = defineStore(
       fetchSquadrons,
       selectedSquadron,
       getSelectedSquadron,
+      selectedMech,
+      getSelectedMech,
       changeSelectedSquadron,
       loading,
     };
