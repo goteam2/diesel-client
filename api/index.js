@@ -21,4 +21,5 @@ app.use("/api/shop", shopRouter);
 app.use("/api/mechs", MechRouter);
 app.use("/api/player", playerRouter);
 
+// console.log('cold start at', new Date().toISOString())
 export default app;

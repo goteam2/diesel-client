@@ -1,6 +1,8 @@
 <template>
-  <div class="w-full max-w-xs gap-y-2">
-    <form @submit.prevent="submitForm" class="grid grid-cols-1">
+  <div
+    class="w-full h-full max-w-xs | mx-auto | flex flex-col items-center justify-center gap-y-4"
+  >
+    <form @submit.prevent="submitForm" class="grid grid-cols-1 w-full">
       <div class="mb-4">
         <label class="block text-sm font-bold mb-2" for="username">
           USERNAME

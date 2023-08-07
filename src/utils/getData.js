@@ -10,12 +10,14 @@ const player = storeToRefs(usePlayerStore());
 
 const ensureToken = async () => {
   return new Promise(async (resolve, reject) => {
-    let token = localStorage.getItem("token");
-    let tokenExpiration = localStorage.getItem("tokenExpires");
+    let token = player.token.value;
+    let tokenExpiration = player.tokenExpires.value;
     if (token && tokenExpiration) {
       const now = new Date();
-      const expirationDate = new Date(parseInt(tokenExpiration));
-      console.log(now, expirationDate);
+      const expirationDate = Date(parseInt(tokenExpiration));
+      console.log(now, expirationDate, tokenExpiration);
+
+      tokenExpiration == "undefined" ? reject("No token found") : null;
       if (now >= expirationDate) {
         console.log("Token expired, refreshing");
         const refresh = await axios.post("/api/player/refresh", {
@@ -44,7 +46,8 @@ const ensureToken = async () => {
 const postData = async (url, payload) => {
   console.log("sending POST request to ", url, "containing", payload);
   return new Promise(async (resolve, reject) => {
-    let token = localStorage.getItem("token");
+    let token = player.token.value;
+
     try {
       const validToken = await ensureToken();
       if (validToken) {
@@ -57,7 +60,7 @@ const postData = async (url, payload) => {
       }
     } catch (err) {
       console.info(err);
-      reject(err);
+      reject({ message: err });
     }
   });
 };

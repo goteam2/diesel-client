@@ -1,5 +1,7 @@
 <template>
-  <div class="w-full max-w-xs grid grid-cols-1 gap-y-4">
+  <div
+    class="w-full h-full max-w-xs | mx-auto | flex flex-col items-center justify-center gap-y-4"
+  >
     <game-btn link="/squadron" color="white"> SQUADRON </game-btn>
     <game-btn link="/equipment" color="white"> EQUIPMENT</game-btn>
     <game-btn link="/comms" color="white">COMMS</game-btn>

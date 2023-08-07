@@ -33,6 +33,10 @@ export default {
       fontFamily: {
         sans: ["nimbus-sans", "sans-serif"],
       },
+      gridTemplateRows: {
+        "main-layout":
+          "120px calc(100vh - 120px - calc(.25 * 100vw)) calc(.25 * 100vw);",
+      },
       screens: {
         ...defaultTheme.screens,
         "3xl": "1920px",

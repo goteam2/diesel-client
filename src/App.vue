@@ -1,13 +1,12 @@
 <template>
-  <div class="flex flex-col | bg-light">
+  <div class="h-full grid grid-rows-main-layout grid-cols-1 | bg-light">
     <Header />
-    <Currency v-show="player.id > 0" />
-    <main
-      class="main-wrapper flex flex-col | justify-center items-center | h-full | p-4"
-    >
-      <transition appear>
-        <router-view />
-      </transition>
+    <main class="main-wrapper flex items-stretch justify-stretch | p-4">
+      <router-view v-slot="{ Component }" class="row-span-4">
+        <transition name="fade" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
     </main>
     <Footer v-show="player.id > 0" />
     <ErrorMessage :error="playerStore.error" />
@@ -32,20 +31,17 @@ const player = ref(playerStore);
 
 <style lang="scss" scoped>
 .main-wrapper {
-  max-height: calc(100vh - 295px);
+  // height: calc(120px 1fr calc(0.25 * 100vw));
 }
 // Here would go any scoped styles for this component
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.12s ease-in;
+  transition: opacity 0.125s ease;
 }
+
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-}
-.fade-enter-to,
-.fade-leave-from {
-  opacity: 1;
 }
 
 // BUTTON STYLES

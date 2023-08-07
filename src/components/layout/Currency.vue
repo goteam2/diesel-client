@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-2 | py-4 px-6 | bg-white">
+  <div class="row-span-2 | grid grid-cols-2 | py-4 px-6 | bg-white">
     <div class="flex justify-start items-center">
       <icon name="money" class="" />
       <span class="ml-2 font-black text-4xl">{{ playerStore.cash }}</span>

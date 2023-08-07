@@ -26,6 +26,7 @@ export const useSquadronStore = defineStore(
         const squads = await postData("/api/squadron/all", data).then(
           (response) => {
             if (response.error) {
+              loading.value = false;
               throw new Error(response);
             }
             console.log(response.data);

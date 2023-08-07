@@ -4,19 +4,42 @@
 
 body {
   background: #4b4b4b;
+  background-image: url("/images/splash2.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  backdrop-filter: grayscale(1.5) contrast(1) brightness(0.34);
   display: flex;
   align-items: center;
   justify-content: stretch;
+  height: 100vh;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 480px) {
+  #app {
+    max-height: min(100vh, 914px);
+  }
+  .grid-rows-main-layout {
+    grid-template-rows: 120px calc(100vh - 120px - calc(0.25 * 100vw)) calc(
+        0.25 * 100vw
+      );
+  }
+}
+
+#app {
+  max-height: min(100vh, 860px);
   overflow: hidden;
 }
 #app {
-  max-width: min(480px, 100vw);
+  max-width: min(420px, 100vw);
   width: 100%;
-  height: 1024px;
-  max-height: min(100vh, 844px);
+  height: min(860px, 100vh);
   margin: auto;
   display: grid;
   grid-template-columns: 1fr;
+}
+.grid-rows-main-layout {
+  grid-template-rows: 120px calc(min(860px, 100vh) - 120px - 105px) 105px;
 }
 
 /* SCROLLBAR */

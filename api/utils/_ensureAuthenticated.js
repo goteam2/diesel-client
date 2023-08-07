@@ -5,16 +5,21 @@ dotenv.config();
 const ensureAuthenticated = (req, res, next) => {
   try {
     const token = req.headers["x-access-token"];
-    if (!token) {
-      return res.status(403).json({ error: "No token provided" });
+    if (!token || token == "undefined") {
+      throw new Error("No token provided");
+    }
+
+    if (req.body.playerId == undefined) {
+      throw new Error({ error: "No playerId provided" });
     }
 
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
+        console.log(err);
         if (err.name === "TokenExpiredError") {
           // Token is expired, generate a new token
           const newToken = jwt.sign(
-            { id: req.userId },
+            { id: req.body.playerId },
             process.env.JWT_SECRET,
             {
               expiresIn: "1h",
@@ -28,9 +33,10 @@ const ensureAuthenticated = (req, res, next) => {
           req.userId = decoded.id;
           next();
         } else {
-          return res
-            .status(500)
-            .json({ error: "Failed to authenticate token" });
+          throw new Error({
+            message: "Failed to authenticate token",
+            details: err,
+          });
         }
       } else {
         // If token is valid, save to request for use in other routes

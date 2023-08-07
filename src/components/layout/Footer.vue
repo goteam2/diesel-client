@@ -1,15 +1,5 @@
 <template>
-  <div class="w-full">
-    <div class="grid grid-cols-12 mx-auto | items-center px-4 py-2">
-      <div
-        class="col-span-9 | uppercase font-black text-5xl | flex justify-start items-center"
-      >
-        {{ currentRoute }}
-      </div>
-      <div class="col-span-3 flex justify-end items-center">
-        <component :is="icons[pageIcon]" class="fill-black h-10 w-10" />
-      </div>
-    </div>
+  <footer class="w-full">
     <form class="grid grid-cols-4" name="bottom-nav">
       <router-link
         class="grid place-items-center aspect-square"
@@ -29,18 +19,18 @@
         />
         <label
           :for="'bottom-nav-input_' + btn.id"
-          class="bg-black p-5 | h-full w-full"
+          class="bg-black p-5 | h-full w-full | grid place-items-center"
         >
           <icon
             :name="btn.icon"
-            height="h-full"
+            height="h-14"
             width="w-full"
             class="fill-light"
           />
         </label>
       </router-link>
     </form>
-  </div>
+  </footer>
 </template>
 
 <script setup>
@@ -63,16 +53,6 @@ const icons = {
   missions: missionsIcon,
   settings: settingsIcon,
 };
-
-const route = useRoute();
-const currentRoute = ref(null);
-const pageIcon = ref("shop");
-// watch route and set pageIcon
-watch(route, (newVal, oldVal) => {
-  pageIcon.value = newVal.name;
-  currentRoute.value = newVal.name;
-  // console.log("route changed", newVal, oldVal, pageIcon.value);
-});
 
 const navItems = [
   {
