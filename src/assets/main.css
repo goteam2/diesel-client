@@ -13,6 +13,7 @@ body {
   justify-content: stretch;
   height: 100vh;
   overflow: hidden;
+  user-select: none; /* Standard syntax */
 }
 
 @media screen and (max-width: 480px) {
