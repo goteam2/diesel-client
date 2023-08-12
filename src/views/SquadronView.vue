@@ -225,6 +225,7 @@ import { register } from "swiper/element/bundle";
 // register Swiper custom elements
 register();
 
+console.log(squadronStore.squadrons.value);
 const selectOpen = ref(false);
 const selectSquad = (id) => {
   changeSelectedSquadron(id);

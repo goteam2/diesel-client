@@ -18,6 +18,7 @@ export const useSquadronStore = defineStore(
     });
     const selectedMech = ref(0);
     const getSelectedMech = computed(() => {
+      if (!squadrons.value[selectedSquadron.value]) return null;
       return squadrons.value[selectedSquadron.value].mechs[selectedMech.value];
     });
     const loading = ref(false);
