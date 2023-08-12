@@ -42,24 +42,25 @@ const playerStore = storeToRefs(usePlayerStore());
 
 import Icon from "@/components/Icon.vue";
 
-import shopIcon from "@/assets/icons/shop.svg";
+import marketIcon from "@/assets/icons/market.svg";
 import hangarIcon from "@/assets/icons/hangar.svg";
 import missionsIcon from "@/assets/icons/missions.svg";
 import settingsIcon from "@/assets/icons/settings.svg";
+import commsIcon from "@/assets/icons/comms.svg";
 
 const icons = {
-  shop: shopIcon,
+  market: marketIcon,
   hangar: hangarIcon,
   missions: missionsIcon,
-  settings: settingsIcon,
+  communications: commsIcon,
 };
 
 const navItems = [
   {
     id: 0,
-    name: "shop",
-    icon: "shop",
-    link: "/shop",
+    name: "market",
+    icon: "market",
+    link: "/market",
   },
   {
     id: 1,
@@ -76,9 +77,9 @@ const navItems = [
   },
   {
     id: 3,
-    name: "settings",
-    icon: "settings",
-    link: "/settings",
+    name: "comms",
+    icon: "comms",
+    link: "/comms",
   },
 ];
 </script>

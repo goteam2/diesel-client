@@ -62,7 +62,7 @@ export const router = createRouter({
       path: "/battle",
       name: "battle",
 
-      // component: () => import('../views/AboutView.vue')
+      component: () => import("../views/GameView.vue"),
     },
     {
       path: "/recap",

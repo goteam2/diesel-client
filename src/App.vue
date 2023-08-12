@@ -1,7 +1,7 @@
 <template>
   <div class="h-full grid grid-rows-main-layout grid-cols-1 | bg-light">
     <Header />
-    <main class="main-wrapper flex items-stretch justify-stretch | p-4">
+    <main class="main-wrapper flex items-stretch justify-stretch | p-0">
       <router-view v-slot="{ Component }" class="row-span-4">
         <transition name="fade" mode="out-in">
           <component :is="Component" />
